@@ -1,4 +1,4 @@
-package kr.minjae.develop.jjiggijjiggi.feature
+package kr.minjae.develop.jjiggijjiggi
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
