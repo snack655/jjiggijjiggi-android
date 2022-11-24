@@ -29,21 +29,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindViewModel() = lifecycleScope.launchWhenStarted {
         mainViewModel.ocrState.collect { state ->
-
             if (state.ocrData != null) {
                 binding.btnTest.visibility = View.GONE
+                binding.tvText.visibility = View.VISIBLE
+                binding.progressCircular.visibility = View.GONE
                 val fieldList = state.ocrData.images[0].fields
-
                 var string = ""
                 fieldList.forEach {
                     string += " " + it.inferText
                 }
-
                 binding.tvText.text = string
+            }
+
+            if (state.isLoading) {
+                binding.btnTest.visibility = View.GONE
+                binding.tvText.visibility = View.GONE
+                binding.progressCircular.visibility = View.VISIBLE
             }
 
             if (state.error.isNotBlank()) {
                 Toast.makeText(this@MainActivity, state.error, Toast.LENGTH_SHORT).show()
+                binding.btnTest.visibility = View.GONE
+                binding.tvText.visibility = View.VISIBLE
+                binding.progressCircular.visibility = View.GONE
             }
         }
     }
