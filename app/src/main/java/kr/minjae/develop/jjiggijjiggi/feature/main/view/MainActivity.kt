@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kr.minjae.develop.jjiggijjiggi.databinding.ActivityMainBinding
+import kr.minjae.develop.jjiggijjiggi.feature.camera.view.CameraActivity
 import kr.minjae.develop.jjiggijjiggi.feature.main.viewmodel.MainViewModel
 
 @AndroidEntryPoint
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         bindViewEvent()
         bindViewModel()
 
-        url = intent.getStringExtra("url") ?: return
+        url = intent.getStringExtra(CameraActivity.INTENT_IMAGE_NAME) ?: return
     }
 
     private fun bindViewModel() = lifecycleScope.launchWhenStarted {
