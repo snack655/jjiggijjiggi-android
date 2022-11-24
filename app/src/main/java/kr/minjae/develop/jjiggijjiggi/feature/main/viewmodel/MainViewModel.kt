@@ -20,7 +20,7 @@ class MainViewModel @Inject constructor(
     private val _ocrState = MutableStateFlow<OcrState>(OcrState())
     val ocrState: StateFlow<OcrState> = _ocrState
 
-    fun getTextInImage() {
+    fun getTextInImage(url: String) {
         _ocrState.value = OcrState(isLoading = true)
         viewModelScope.launch {
             ocrRepository.getTextInImage(
@@ -28,7 +28,7 @@ class MainViewModel @Inject constructor(
                     images = listOf(ImageRequest(
                         format = "jpg",
                         name = "medium",
-                        url = "http://www.dsbachi.com/web/product/medium/202203/44b9eefbcad52c710d8e0b9ab8a75344.jpg")
+                        url = url)
                     )
                 )
             )

@@ -15,12 +15,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var url: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initActivity()
         bindViewEvent()
         bindViewModel()
+
+        url = intent.getStringExtra("url") ?: return
     }
 
     private fun bindViewModel() = lifecycleScope.launchWhenStarted {
@@ -52,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindViewEvent() {
         binding.btnTest.setOnClickListener {
-            mainViewModel.getTextInImage()
+            mainViewModel.getTextInImage(url)
         }
     }
 }

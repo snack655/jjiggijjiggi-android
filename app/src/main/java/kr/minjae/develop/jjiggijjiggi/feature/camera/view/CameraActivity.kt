@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,7 +25,6 @@ import kr.minjae.develop.jjiggijjiggi.R
 import kr.minjae.develop.jjiggijjiggi.databinding.ActivityCameraBinding
 import kr.minjae.develop.jjiggijjiggi.feature.camera.viewmodel.CameraViewModel
 import kr.minjae.develop.jjiggijjiggi.feature.main.view.MainActivity
-
 
 class CameraActivity : AppCompatActivity() {
 
@@ -52,7 +52,6 @@ class CameraActivity : AppCompatActivity() {
         }
 
         bindingViewEvent()
-
     }
 
     private fun bindingViewEvent() = with(binding) {
@@ -66,26 +65,44 @@ class CameraActivity : AppCompatActivity() {
             selectedUri = Uri.fromFile(createImageFile())
         }
 
-        btnCapture.setOnClickListener {
+        btnSolve.setOnClickListener {
             if (selectedUri != null) {
                 val photoUri = selectedUri ?: return@setOnClickListener
                 uploadPhoto(photoUri,
-                    successHandler = {
+                    successHandler = { uri ->
                         Toast.makeText(this@CameraActivity, "해석을 시작합니다.", Toast.LENGTH_SHORT)
                             .show()
                         val intent = Intent(this@CameraActivity, MainActivity::class.java)
+                        intent.putExtra("url", uri)
                         startActivity(intent)
                     },
                     errorHandler = {
                         Toast.makeText(this@CameraActivity, "사진 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     }
                 )
+            } else {
+                Toast.makeText(this@CameraActivity, "이미지가 없습니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun uploadPhoto(uri: Uri, successHandler: () -> Unit, errorHandler: () -> Unit) {
-
+    private fun uploadPhoto(uri: Uri, successHandler: (uri: String) -> Unit, errorHandler: () -> Unit) {
+        val fileName = "${System.currentTimeMillis()}.png"
+        storage.reference.child("jjiggi/photo").child(fileName)
+            .putFile(uri)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    storage.reference.child("jjiggi/photo").child(fileName)
+                        .downloadUrl
+                        .addOnSuccessListener { uri ->
+                            successHandler(uri.toString())
+                        }.addOnFailureListener {
+                            errorHandler()
+                        }
+                } else {
+                    errorHandler()
+                }
+            }
     }
 
     private fun initActivity() {
