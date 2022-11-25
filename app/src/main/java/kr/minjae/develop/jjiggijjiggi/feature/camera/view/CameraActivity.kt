@@ -50,6 +50,10 @@ class CameraActivity : AppCompatActivity() {
                     .load(selectedUri)
                     .error(R.drawable.dummy)
                     .into(binding.ivIamge)
+
+                binding.layoutSolve.visibility = View.VISIBLE
+                binding.viewBackground.visibility = View.VISIBLE
+                binding.layoutAppDesc.visibility = View.GONE
             }
         }
 
@@ -68,7 +72,7 @@ class CameraActivity : AppCompatActivity() {
         selectedUri = Uri.fromFile(createImageFile())
     }
 
-    private fun onClickSolve() = binding.btnSolve.setOnClickListener {
+    private fun onClickSolve() = binding.layoutSolve.setOnClickListener {
         selectedUri?.let { cameraViewModel.uploadPhoto(storage, it) } ?: return@setOnClickListener
     }
 
@@ -78,9 +82,9 @@ class CameraActivity : AppCompatActivity() {
             if (state.url.isNotBlank()) {
                 binding.progressCircular.visibility = View.GONE
                 binding.ivIamge.visibility = View.VISIBLE
-                binding.viewBackground.visibility = View.VISIBLE
                 binding.btnSolve.visibility = View.VISIBLE
                 binding.btnCapture.visibility = View.VISIBLE
+                binding.lottieCamera.visibility = View.GONE
 
                 Toast.makeText(this@CameraActivity, "사진을 업로드에 성공했습니다.", Toast.LENGTH_SHORT)
                     .show()
@@ -94,8 +98,11 @@ class CameraActivity : AppCompatActivity() {
                 binding.progressCircular.visibility = View.VISIBLE
                 binding.ivIamge.visibility = View.GONE
                 binding.viewBackground.visibility = View.GONE
-                binding.btnSolve.visibility = View.GONE
+                binding.layoutSolve.visibility = View.GONE
                 binding.btnCapture.visibility = View.GONE
+                binding.lottieCamera.visibility = View.GONE
+                binding.layoutAppDesc.visibility = View.GONE
+                binding.ivCamera.visibility = View.GONE
             }
 
             if (state.error.isNotBlank()) {
