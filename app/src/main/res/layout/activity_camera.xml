@@ -54,7 +54,7 @@
         app:lottie_loop="true"/>
 
     <ImageView
-        android:id="@+id/iv_iamge"
+        android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:elevation="1dp"
@@ -70,10 +70,10 @@
         android:layout_height="0dp"
         android:background="@color/color_view_background"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/iv_iamge"
-        app:layout_constraintStart_toStartOf="@id/iv_iamge"
-        app:layout_constraintBottom_toBottomOf="@id/iv_iamge"
-        app:layout_constraintEnd_toEndOf="@id/iv_iamge" />
+        app:layout_constraintTop_toTopOf="@id/iv_image"
+        app:layout_constraintStart_toStartOf="@id/iv_image"
+        app:layout_constraintBottom_toBottomOf="@id/iv_image"
+        app:layout_constraintEnd_toEndOf="@id/iv_image" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_solve"
