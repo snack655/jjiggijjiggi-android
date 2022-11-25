@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "954428919466",
+    "project_id": "jjiggijjiggi-f7b1a",
+    "storage_bucket": "jjiggijjiggi-f7b1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954428919466:android:fb13866fe3276032824ad3",
+        "android_client_info": {
+          "package_name": "kr.minjae.develop.jjiggijjiggi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "954428919466-78f3bg8boo5h20gfrfg033ldcfjbhcqp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw7ryms9Bzd7Cmm85derffQXg3bVpjCX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "954428919466-78f3bg8boo5h20gfrfg033ldcfjbhcqp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

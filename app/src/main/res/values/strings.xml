@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">찍기찍기</string>
+    <string name="text_solove">해석하기</string>
+    <string name="text_capture">사진찍기</string>
 </resources>
