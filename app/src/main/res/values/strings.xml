@@ -2,4 +2,7 @@
     <string name="app_name">찍기찍기</string>
     <string name="text_solove">해석하기</string>
     <string name="text_capture">사진찍기</string>
+    <string name="text_app_desc">경복궁 안내판 사진을 찍으면\n쉽게 설명해 준다고?!</string>
+    <string name="text_menu_desc">안내판 해설</string>
+    <string name="title_main">해설 보기</string>
 </resources>

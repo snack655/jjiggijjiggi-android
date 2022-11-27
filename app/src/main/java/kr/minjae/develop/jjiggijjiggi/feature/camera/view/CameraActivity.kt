@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -46,10 +45,14 @@ class CameraActivity : AppCompatActivity() {
 
         actionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
-                Glide.with(binding.ivIamge.context)
+                Glide.with(binding.ivImage.context)
                     .load(selectedUri)
                     .error(R.drawable.dummy)
-                    .into(binding.ivIamge)
+                    .into(binding.ivImage)
+
+                binding.layoutSolve.visibility = View.VISIBLE
+                binding.viewBackground.visibility = View.VISIBLE
+                binding.layoutAppDesc.visibility = View.GONE
             }
         }
 
@@ -68,7 +71,7 @@ class CameraActivity : AppCompatActivity() {
         selectedUri = Uri.fromFile(createImageFile())
     }
 
-    private fun onClickSolve() = binding.btnSolve.setOnClickListener {
+    private fun onClickSolve() = binding.layoutSolve.setOnClickListener {
         selectedUri?.let { cameraViewModel.uploadPhoto(storage, it) } ?: return@setOnClickListener
     }
 
@@ -77,10 +80,13 @@ class CameraActivity : AppCompatActivity() {
 
             if (state.url.isNotBlank()) {
                 binding.progressCircular.visibility = View.GONE
-                binding.ivIamge.visibility = View.VISIBLE
-                binding.viewBackground.visibility = View.VISIBLE
+                binding.ivImage.visibility = View.VISIBLE
                 binding.btnSolve.visibility = View.VISIBLE
                 binding.btnCapture.visibility = View.VISIBLE
+                binding.lottieCamera.visibility = View.GONE
+                binding.viewBackground.visibility = View.VISIBLE
+                binding.ivCamera.visibility = View.VISIBLE
+                binding.layoutSolve.visibility = View.VISIBLE
 
                 Toast.makeText(this@CameraActivity, "사진을 업로드에 성공했습니다.", Toast.LENGTH_SHORT)
                     .show()
@@ -92,16 +98,19 @@ class CameraActivity : AppCompatActivity() {
 
             if (state.isLoading) {
                 binding.progressCircular.visibility = View.VISIBLE
-                binding.ivIamge.visibility = View.GONE
+                binding.ivImage.visibility = View.GONE
                 binding.viewBackground.visibility = View.GONE
-                binding.btnSolve.visibility = View.GONE
+                binding.layoutSolve.visibility = View.GONE
                 binding.btnCapture.visibility = View.GONE
+                binding.lottieCamera.visibility = View.GONE
+                binding.layoutAppDesc.visibility = View.GONE
+                binding.ivCamera.visibility = View.GONE
             }
 
             if (state.error.isNotBlank()) {
                 Toast.makeText(this@CameraActivity, state.error, Toast.LENGTH_SHORT).show()
                 binding.progressCircular.visibility = View.GONE
-                binding.ivIamge.visibility = View.VISIBLE
+                binding.ivImage.visibility = View.VISIBLE
                 binding.viewBackground.visibility = View.VISIBLE
                 binding.btnSolve.visibility = View.VISIBLE
                 binding.btnCapture.visibility = View.VISIBLE
@@ -117,7 +126,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun createImageFile(): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val imageFileName = "PHOTO_${timeStamp}.jpg"
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File(storageDir, imageFileName)
